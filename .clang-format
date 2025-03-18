@@ -1,0 +1,19 @@
+BasedOnStyle: Google
+IndentWidth: 4
+UseTab: Always
+BreakBeforeBraces: Attach  
+ColumnLimit: 80
+AllowShortBlocksOnASingleLine: false
+AllowShortCaseLabelsOnASingleLine: false
+AllowShortFunctionsOnASingleLine: None 
+AllowShortIfStatementsOnASingleLine: false
+AllowShortLoopsOnASingleLine: false
+SpaceBeforeParens: ControlStatements
+SpaceAfterCStyleCast: true
+SpacesInParentheses: false
+SpacesInAngles: false
+SpacesBeforeTrailingComments: 1
+SortIncludes: true 
+ReflowComments: true
+Cpp11BracedListStyle: true
+

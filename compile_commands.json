@@ -1,0 +1,8 @@
+[
+  {
+    "directory": "$HOME/image_super_resolution",
+    "command": "/usr/bin/c++   -g -Ofast -Wall -pedantic -o CMakeFiles/image_super_resolution.dir/src/main.cpp.o -c $HOME/image_super_resolution/src/main.cpp",
+    "file": "$HOME/image_super_resolution/src/main.cpp",
+    "output": "CMakeFiles/image_super_resolution.dir/src/main.cpp.o"
+  }
+]
