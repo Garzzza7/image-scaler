@@ -57,18 +57,6 @@ int run(int &argc, char **argv) {
     constexpr int neural_net_size =
 	(block_size + 2 * (overlap + 6)) * (block_size + 2 * (overlap + 6));
 
-    if (argc == 2 && std::string(argv[1]) == "-h") {
-	std::cout << "This is an image super-resolution program.\nIn order to "
-		     "use it you have to provide input and output image."
-		  << std::endl;
-	return 1;
-    } else if (argc != 3) {
-	std::cout << "Calling the program should follow such pattern\n"
-		     "{program name} input.png output.png "
-		  << std::endl;
-	return 1;
-    }
-
     // begin the timer
     std::chrono::time_point<
 	std::chrono::system_clock,
@@ -170,6 +158,20 @@ int run(int &argc, char **argv) {
 }
 
 int main(int argc, char **argv) {
+    if (argc == 2 &&
+	(std::string(argv[1]) == "-h" || std::string(argv[1]) == "--help")) {
+	std::cout
+	    << "This is an image super-resolution program.\nIn order to "
+	       "use it you have to provide an input and an output image.\nThe "
+	       "patter is as follows:\n./image-scaler input.png output.png"
+	    << std::endl;
+	return 1;
+    } else if (argc != 3) {
+	std::cout << "Calling the program should follow such pattern\n"
+		     "./image-scaler input.png output.png"
+		  << std::endl;
+	return 1;
+    }
     std::cout << "\nPreparing your image." << std::endl;
     const unsigned int cnt_threads = std::thread::hardware_concurrency();
     if (cnt_threads > 2) {
