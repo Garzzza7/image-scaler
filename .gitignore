@@ -11,6 +11,7 @@
 *.idx
 .idea
 .cache
+.zig-cache
 build/*
 *log
 *.swp
