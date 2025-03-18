@@ -167,7 +167,7 @@ int main(int argc, char **argv) {
 	    << std::endl;
 	return 1;
     } else if (argc != 3) {
-	std::cout << "Calling the program should follow such pattern\n"
+	std::cout << "Calling the program should follow such a pattern\n"
 		     "./image-scaler input.png output.png"
 		  << std::endl;
 	return 1;
