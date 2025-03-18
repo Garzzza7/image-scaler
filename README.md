@@ -3,3 +3,4 @@
 
 
 ./run_example.sh to run on an example image.
+Not tested on Windows.
