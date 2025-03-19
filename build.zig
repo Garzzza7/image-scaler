@@ -1,3 +1,4 @@
+// THIS IS STILL WIP, DON'T RELAY ON IT TO WORK EVERY TIME, USE COMPILE.SH OR CMAKE
 const std = @import("std");
 
 pub fn build(b: *std.Build) void {
