@@ -4,6 +4,8 @@
 #include <unistd.h>		       // sleep
 
 #include <chrono>     // timer
+#include <cstdlib>    //exit
+#include <exception>  //terminate
 #include <functional> // ref
 #include <iomanip>    // timer
 #include <iostream>   // console output
@@ -36,6 +38,7 @@ void notify() {
 	std::cout << "\b\b\b   \b\b\b";
     }
     std::cout << std::endl;
+    std::terminate();
 }
 
 int run(int &argc, char **argv) {
@@ -58,10 +61,10 @@ int run(int &argc, char **argv) {
 	(block_size + 2 * (overlap + 6)) * (block_size + 2 * (overlap + 6));
 
     // begin the timer
-    /*   std::chrono::time_point<*/
-    /*std::chrono::system_clock,*/
-    /*std::chrono::duration<long, std::ratio<1, 1000000000>>>*/
-    auto start_timer = std::chrono::high_resolution_clock::now();
+    std::chrono::time_point<
+	std::chrono::system_clock,
+	std::chrono::duration<long, std::ratio<1, 1000000000>>>
+	start_timer = std::chrono::high_resolution_clock::now();
 
     // store input arguments
     const char *source_image_name = argv[1];
@@ -105,9 +108,14 @@ int run(int &argc, char **argv) {
     unsigned char *new_image_buffer = nullptr;
     if (!(new_image_buffer = (unsigned char *) malloc(
 	      new_height * new_width * channels * sizeof(unsigned char)))) {
-	std::cerr << "Not enough memory to allocate for the new image"
-		  << std::endl;
-	return 2;
+	std::cerr << "Not enough memory to allocate for the new image.\n"
+		  << "Could not allocate "
+		  << new_height * new_width * channels * sizeof(unsigned char)
+		  << " bytes of memory\n"
+		  << "Aborting." << std::endl;
+	done = 1;
+	std::terminate();
+	exit(2);
     }
 
     // preprocessing
@@ -144,10 +152,10 @@ int run(int &argc, char **argv) {
     done = 1;
 
     // stop the timer
-    /*   std::chrono::time_point<*/
-    /*std::chrono::system_clock,*/
-    /*std::chrono::duration<long, std::ratio<1, 1000000000>>>*/
-    auto finish_timer = std::chrono::high_resolution_clock::now();
+    std::chrono::time_point<
+	std::chrono::system_clock,
+	std::chrono::duration<long, std::ratio<1, 1000000000>>>
+	finish_timer = std::chrono::high_resolution_clock::now();
     std::cout << std::setprecision(4) << std::fixed;
     std::cout << "Execution time: "
 	      << std::chrono::duration_cast<std::chrono::duration<double>>(
@@ -158,6 +166,7 @@ int run(int &argc, char **argv) {
 }
 
 int main(int argc, char **argv) {
+    std::cout << sizeof(int) << "\n";
     if (argc == 2 &&
 	(std::string(argv[1]) == "-h" || std::string(argv[1]) == "--help")) {
 	std::cout
