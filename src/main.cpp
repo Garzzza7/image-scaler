@@ -38,14 +38,14 @@ void notify() {
 	std::cout << "\b\b\b   \b\b\b";
     }
     std::cout << std::endl;
-    std::terminate();
+    /*std::terminate();*/
 }
 
 int run(int &argc, char **argv) {
     //   sysinfo(&memInfo);
     //   long long physMemUsed = memInfo.totalram - memInfo.freeram;
     //   physMemUsed *= memInfo.mem_unit;
-
+    std::cout << std::setprecision(15) << std::endl;
     int height = 0;
     int width = 0;
     int channels = 0;
@@ -114,9 +114,14 @@ int run(int &argc, char **argv) {
 		  << " bytes of memory\n"
 		  << "Aborting." << std::endl;
 	done = 1;
-	std::terminate();
+	/*std::terminate();*/
 	exit(2);
     }
+    const auto mem = new_height * new_width * channels * sizeof(unsigned char);
+
+    std::cout << "Allocated " << ((mem >= 1000000) ? mem / 1000000 : mem)
+	      << ((mem >= 1000000) ? " mb" : " bytes") << " of memory"
+	      << std::endl;
 
     // preprocessing
     // stretch the image to the desired resolution
