@@ -38,7 +38,6 @@ void notify() {
 	std::cout << "\b\b\b   \b\b\b";
     }
     std::cout << std::endl;
-    /*std::terminate();*/
 }
 
 int run(int &argc, char **argv) {
@@ -78,7 +77,7 @@ int run(int &argc, char **argv) {
 				  STBI_rgb_alpha))) {
 	std::cerr << "Could not read the image: " << source_image_name
 		  << std::endl;
-	exit(1);
+	exit(EXIT_FAILURE);
     }
 
     // assign dimensions of the scaled image
@@ -114,10 +113,10 @@ int run(int &argc, char **argv) {
 		  << "Could not allocate "
 		  << ((mem >= 1000000) ? mem / 1000000 : mem)
 		  << ((mem >= 1000000) ? " mb" : " bytes") << " of memory\n"
-		  << "Aborting." << std::endl;
+		  << "Aborting.\n"
+		  << std::endl;
 	done = 1;
-	/*std::terminate();*/
-	exit(2);
+	exit(EXIT_FAILURE);
     }
     const auto mem = new_height * new_width * channels * sizeof(unsigned char);
 
@@ -145,7 +144,7 @@ int run(int &argc, char **argv) {
     if (!(stbi_write_png(output_image_name, new_width, new_height, channels,
 			 new_image_buffer, new_width * channels))) {
 	std::cerr << "Could not write image:" << output_image_name << std::endl;
-	exit(1);
+	exit(EXIT_FAILURE);
     } else {
 	std::cout << "DONE" << std::endl;
     }
