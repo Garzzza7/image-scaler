@@ -78,7 +78,7 @@ int run(int &argc, char **argv) {
 				  STBI_rgb_alpha))) {
 	std::cerr << "Could not read the image: " << source_image_name
 		  << std::endl;
-	return 1;
+	exit(1);
     }
 
     // assign dimensions of the scaled image
@@ -108,10 +108,12 @@ int run(int &argc, char **argv) {
     unsigned char *new_image_buffer = nullptr;
     if (!(new_image_buffer = (unsigned char *) malloc(
 	      new_height * new_width * channels * sizeof(unsigned char)))) {
+	const auto mem =
+	    new_height * new_width * channels * sizeof(unsigned char);
 	std::cerr << "Not enough memory to allocate for the new image.\n"
 		  << "Could not allocate "
-		  << new_height * new_width * channels * sizeof(unsigned char)
-		  << " bytes of memory\n"
+		  << ((mem >= 1000000) ? mem / 1000000 : mem)
+		  << ((mem >= 1000000) ? " mb" : " bytes") << " of memory\n"
 		  << "Aborting." << std::endl;
 	done = 1;
 	/*std::terminate();*/
@@ -143,7 +145,7 @@ int run(int &argc, char **argv) {
     if (!(stbi_write_png(output_image_name, new_width, new_height, channels,
 			 new_image_buffer, new_width * channels))) {
 	std::cerr << "Could not write image:" << output_image_name << std::endl;
-	return 1;
+	exit(1);
     } else {
 	std::cout << "DONE" << std::endl;
     }
