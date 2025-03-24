@@ -63,7 +63,7 @@ int run(int &argc, char **argv) {
     /*   std::chrono::time_point<*/
     /*std::chrono::system_clock,*/
     /*std::chrono::duration<long, std::ratio<1, 1000000000>>>*/
-    auto start_timer = std::chrono::high_resolution_clock::now();
+    const auto start_timer = std::chrono::high_resolution_clock::now();
 
     // store input arguments
     const char *source_image_name = argv[1];
@@ -162,12 +162,14 @@ int run(int &argc, char **argv) {
     /*std::chrono::system_clock,*/
     /*std::chrono::duration<long, std::ratio<1, 1000000000>>>*/
     auto finish_timer = std::chrono::high_resolution_clock::now();
-    std::cout << std::setprecision(4) << std::fixed;
-    std::cout << "Execution time: "
-	      << std::chrono::duration_cast<std::chrono::duration<double>>(
-		     finish_timer - start_timer)
-		     .count()
-	      << " seconds" << std::endl;
+    const double timing =
+	std::chrono::duration_cast<std::chrono::duration<double>>(finish_timer -
+								  start_timer)
+	    .count();
+
+    std::cout << std::setprecision(2) << std::fixed;
+    std::cout << "Execution time: " << timing << " seconds.\nApproximately "
+	      << timing / (double) 60 << " minutes." << std::endl;
     return 0;
 }
 
