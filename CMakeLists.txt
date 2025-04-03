@@ -1,6 +1,6 @@
-# emergence generation of complie_commands.json file for
-# clangd to parse every used file properly
-# cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=1
+# for emergency generation of complie_commands.json file for
+# clangd to parse every used file properly run
+# cmake . -DCMAKE_EXPORT_COMPILE_COMMANDS=1
 # the file should be detected from the build directory,
 # in case it is not read this https://clangd.llvm.org/installation
 # also you might want to check for colliding versions here
