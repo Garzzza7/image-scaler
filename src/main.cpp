@@ -5,7 +5,6 @@
 
 #include <chrono>     // timer
 #include <cstdlib>    //exit
-#include <exception>  //terminate
 #include <functional> // ref
 #include <iomanip>    // timer
 #include <iostream>   // console output
