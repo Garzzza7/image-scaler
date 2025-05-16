@@ -4,7 +4,7 @@
 #include <vector>
 
 // bias of the output neuron
-const double biases_conv3 = 12.8460f;
+constexpr double biases_conv3 = 12.8460f;
 
 //  Biases of the first layer
 const std::vector<double> biases_conv1 = {
@@ -20,7 +20,7 @@ const std::vector<double> biases_conv1 = {
     -11.8912};
 
 // First layer 9 by 9 kernel for convolution
-const double weights_conv1_data[CONV_LAYER1_FILTERS][9][9] = {
+constexpr double weights_conv1_data[CONV_LAYER1_FILTERS][9][9] = {
     // 01
     -0.0887,
     +0.0384,
@@ -5281,7 +5281,7 @@ const std::vector<double> biases_conv2 = {
 };
 
 // 2nd layer convolution 64 by 1
-const double weights_conv2_data[CONV_LAYER2_FILTERS][CONV_LAYER1_FILTERS] = {
+constexpr double weights_conv2_data[CONV_LAYER2_FILTERS][CONV_LAYER1_FILTERS] = {
     // 01
     -0.2400,
     +0.1037,
@@ -7365,7 +7365,7 @@ const double weights_conv2_data[CONV_LAYER2_FILTERS][CONV_LAYER1_FILTERS] = {
 };
 
 // 5 by 5 kernel for the second layer
-const double weights_conv3_data[CONV_LAYER2_FILTERS][5][5] = {
+constexpr double weights_conv3_data[CONV_LAYER2_FILTERS][5][5] = {
     // 01
     -0.0173,
     -0.0067,

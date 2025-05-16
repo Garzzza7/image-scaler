@@ -1,10 +1,9 @@
 #define STB_IMAGE_IMPLEMENTATION       // important for stb_image
 #define STB_IMAGE_WRITE_IMPLEMENTATION // important for stb_image_write
-#include <stdlib.h>		       // malloc , free
 #include <unistd.h>		       // sleep
 
 #include <chrono>     // timer
-#include <cstdlib>    //exit
+#include <cstdlib>    // malloc , free
 #include <functional> // ref
 #include <iomanip>    // timer
 #include <iostream>   // console output
@@ -25,7 +24,7 @@
 
 // struct sysinfo memInfo;
 
-bool done = 0;
+bool done = false;
 void notify() {
     std::cout.flush();
     while (!done) {
@@ -50,10 +49,10 @@ int run(int &argc, char **argv) {
     int new_height = 0;
     int new_width = 0;
 
-    const int block_size = 256;
-    const int overlap = 16;
-    const double pcnn = 0.707107;
-    const int scaling_factor = 2;
+    constexpr int block_size = 256;
+    constexpr int overlap = 16;
+    constexpr double pcnn = 0.707107;
+    constexpr int scaling_factor = 2;
 
     constexpr int neural_net_size =
 	(block_size + 2 * (overlap + 6)) * (block_size + 2 * (overlap + 6));
@@ -72,8 +71,8 @@ int run(int &argc, char **argv) {
 
     // load the input image using stb_image
     stbi_uc *input_image = nullptr;
-    if (!(input_image = stbi_load(source_image_name, &width, &height, &channels,
-				  STBI_rgb_alpha))) {
+    if (!((input_image = stbi_load(source_image_name, &width, &height,
+				   &channels, STBI_rgb_alpha)))) {
 	std::cerr << "Could not read the image: " << source_image_name
 		  << std::endl;
 	exit(EXIT_FAILURE);
@@ -92,8 +91,7 @@ int run(int &argc, char **argv) {
     for (int y = 0; y < height; y++) {
 	for (int x = 0; x < width; x++) {
 	    for (int d = 0; d < channels; d++) {
-		image_buffer[image_iter + d] =
-		    (unsigned char) input_image[stb_iter + d];
+		image_buffer[image_iter + d] = input_image[stb_iter + d];
 	    }
 	    stb_iter += STBI_rgb_alpha;
 	    image_iter += channels;
@@ -103,9 +101,9 @@ int run(int &argc, char **argv) {
     std::cout << "To: " << new_width << " by " << new_height << std::endl;
 
     // cannot use std::vector here , because of stb_image
-    unsigned char *new_image_buffer = nullptr;
-    if (!(new_image_buffer = (unsigned char *) malloc(
-	      new_height * new_width * channels * sizeof(unsigned char)))) {
+    unsigned char *new_image_buffer{nullptr};
+    if (!((new_image_buffer = static_cast<unsigned char *>(malloc(
+	       new_height * new_width * channels * sizeof(unsigned char)))))) {
 	const auto mem =
 	    new_height * new_width * channels * sizeof(unsigned char);
 	std::cerr << "Not enough memory to allocate for the new image.\n"
@@ -114,7 +112,7 @@ int run(int &argc, char **argv) {
 		  << ((mem >= 1000000) ? " mb" : " bytes") << " of memory\n"
 		  << "Aborting.\n"
 		  << std::endl;
-	done = 1;
+	done = true;
 	exit(EXIT_FAILURE);
     }
     const auto mem = new_height * new_width * channels * sizeof(unsigned char);
@@ -154,13 +152,13 @@ int run(int &argc, char **argv) {
     free(new_image_buffer);
 
     std::cout << "Saved as: " << output_image_name << std::endl;
-    done = 1;
+    done = true;
 
     // stop the timer
     /*   std::chrono::time_point<*/
     /*std::chrono::system_clock,*/
     /*std::chrono::duration<long, std::ratio<1, 1000000000>>>*/
-    auto finish_timer = std::chrono::high_resolution_clock::now();
+    const auto finish_timer = std::chrono::high_resolution_clock::now();
     const double timing =
 	std::chrono::duration_cast<std::chrono::duration<double>>(finish_timer -
 								  start_timer)
@@ -168,7 +166,7 @@ int run(int &argc, char **argv) {
 
     std::cout << std::setprecision(2) << std::fixed;
     std::cout << "Execution time: " << timing << " seconds.\nApproximately "
-	      << timing / (double) 60 << " minutes." << std::endl;
+	      << timing / static_cast<double>(60) << " minutes." << std::endl;
     return 0;
 }
 
@@ -181,7 +179,8 @@ int main(int argc, char **argv) {
 	       "patter is as follows:\n./image-scaler input.png output.png"
 	    << std::endl;
 	return 1;
-    } else if (argc != 3) {
+    }
+    if (argc != 3) {
 	std::cout << "Calling the program should follow such a pattern\n"
 		     "./image-scaler input.png output.png"
 		  << std::endl;
