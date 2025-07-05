@@ -1,9 +1,10 @@
 #pragma once
 #include <iostream>
 
-inline void YCbCr_to_RGB_Convert(unsigned char* src, const int& height,
-				 const int& width, const int& channels) {
-    int chan {0};
+inline void
+YCbCr_to_RGB_Convert(unsigned char *src, const int &height, const int &width,
+		     const int &channels) {
+    int chan{0};
 
     if (channels < 3) {
 	std::cout << "IMAGE HAS LESS THAN 3 CHANNELS." << std::endl;
@@ -26,8 +27,9 @@ inline void YCbCr_to_RGB_Convert(unsigned char* src, const int& height,
     }
 }
 
-inline void RGB_to_YCbCr_Convert(unsigned char* src, const int& height,
-				 const int& width, const int& channels) {
+inline void
+RGB_to_YCbCr_Convert(unsigned char *src, const int &height, const int &width,
+		     const int &channels) {
     int chan = 0;
 
     if (channels < 3) {

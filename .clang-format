@@ -1,4 +1,4 @@
-BasedOnStyle: Google
+BasedOnStyle: GNU
 IndentWidth: 4
 UseTab: Always
 BreakBeforeBraces: Attach  

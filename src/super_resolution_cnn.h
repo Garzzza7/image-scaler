@@ -5,11 +5,11 @@
 
 #define SCALING_FACTOR 2
 
-inline void Convolution_99x11x55_offset(std::vector<unsigned char>& src,
-					std::vector<double>& cnndst,
-					const int& height, const int& width,
-					const int& offset,
-					const double& partcnn) {
+inline void
+Convolution_99x11x55_offset(std::vector<unsigned char> &src,
+			    std::vector<double> &cnndst, const int &height,
+			    const int &width, const int &offset,
+			    const double &partcnn) {
     std::vector<double> temp_buffer(CONV_LAYER1_FILTERS);
 
     int rowf, colf;
@@ -29,8 +29,8 @@ inline void Convolution_99x11x55_offset(std::vector<unsigned char>& src,
 		    }
 		}
 		temp_buffer[k] += biases_conv1[k];
-		temp_buffer[k] =
-		    (temp_buffer[k] < 0.0f) ? 0.0f : temp_buffer[k];
+		temp_buffer[k]
+		    = (temp_buffer[k] < 0.0f) ? 0.0f : temp_buffer[k];
 	    }
 	    for (int k = 0; k < CONV_LAYER2_FILTERS; k++) {
 		double result = 0.0f;
@@ -71,14 +71,14 @@ inline void Convolution_99x11x55_offset(std::vector<unsigned char>& src,
     }
 }
 
-inline void SRCNN_Block(unsigned char* src, std::vector<unsigned char>& block,
-			std::vector<double>& cnndst, const int& height,
-			const int& width,
-			const int& channels, const int& block_size,
-			const int& overlap, const double& partcnn) {
+inline void
+SRCNN_Block(unsigned char *src, std::vector<unsigned char> &block,
+	    std::vector<double> &cnndst, const int &height, const int &width,
+	    const int &channels, const int &block_size, const int &overlap,
+	    const double &partcnn) {
     int xf, yf;
-    int ki {0};
-    int k  {0};
+    int ki{0};
+    int k{0};
     constexpr int offset = 6;
 
     const int bs2 = block_size;
@@ -113,8 +113,8 @@ inline void SRCNN_Block(unsigned char* src, std::vector<unsigned char>& block,
 			xf = x0 + x + overlap;
 			if (xf < width) {
 			    ki = (yf * width + xf) * channels;
-			    k = ((y + overlap + offset) * bb + x + offset +
-				 overlap);
+			    k = ((y + overlap + offset) * bb + x + offset
+				 + overlap);
 			    src[ki] = block[k];
 			}
 		    }

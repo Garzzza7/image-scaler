@@ -25,7 +25,8 @@
 // struct sysinfo memInfo;
 
 bool done = false;
-void notify() {
+void
+notify() {
     std::cout.flush();
     while (!done) {
 	for (int i = 0; i < 3; i++) {
@@ -38,7 +39,8 @@ void notify() {
     std::cout << std::endl;
 }
 
-int run(int &argc, char **argv) {
+int
+run(int &argc, char **argv) {
     //   sysinfo(&memInfo);
     //   long long physMemUsed = memInfo.totalram - memInfo.freeram;
     //   physMemUsed *= memInfo.mem_unit;
@@ -54,8 +56,8 @@ int run(int &argc, char **argv) {
     constexpr double pcnn = 0.707107;
     constexpr int scaling_factor = 2;
 
-    constexpr int neural_net_size =
-	(block_size + 2 * (overlap + 6)) * (block_size + 2 * (overlap + 6));
+    constexpr int neural_net_size
+	= (block_size + 2 * (overlap + 6)) * (block_size + 2 * (overlap + 6));
 
     // begin the timer
     /*   std::chrono::time_point<*/
@@ -104,8 +106,8 @@ int run(int &argc, char **argv) {
     unsigned char *new_image_buffer{nullptr};
     if (!((new_image_buffer = static_cast<unsigned char *>(malloc(
 	       new_height * new_width * channels * sizeof(unsigned char)))))) {
-	const auto mem =
-	    new_height * new_width * channels * sizeof(unsigned char);
+	const auto mem
+	    = new_height * new_width * channels * sizeof(unsigned char);
 	std::cerr << "Not enough memory to allocate for the new image.\n"
 		  << "Could not allocate "
 		  << ((mem >= 1000000) ? mem / 1000000 : mem)
@@ -159,10 +161,10 @@ int run(int &argc, char **argv) {
     /*std::chrono::system_clock,*/
     /*std::chrono::duration<long, std::ratio<1, 1000000000>>>*/
     const auto finish_timer = std::chrono::high_resolution_clock::now();
-    const double timing =
-	std::chrono::duration_cast<std::chrono::duration<double>>(finish_timer -
-								  start_timer)
-	    .count();
+    const double timing
+	= std::chrono::duration_cast<std::chrono::duration<double>>(
+	      finish_timer - start_timer)
+	      .count();
 
     std::cout << std::setprecision(2) << std::fixed;
     std::cout << "Execution time: " << timing << " seconds.\nApproximately "
@@ -170,9 +172,10 @@ int run(int &argc, char **argv) {
     return 0;
 }
 
-int main(int argc, char **argv) {
-    if (argc == 2 &&
-	(std::string(argv[1]) == "-h" || std::string(argv[1]) == "--help")) {
+int
+main(int argc, char **argv) {
+    if (argc == 2
+	&& (std::string(argv[1]) == "-h" || std::string(argv[1]) == "--help")) {
 	std::cout
 	    << "This is an image super-resolution program.\nIn order to "
 	       "use it you have to provide an input and an output image.\nThe "
