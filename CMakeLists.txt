@@ -10,7 +10,7 @@ set(project_name "image-scaler")
 
 project(${project_name})
 
-add_compile_options(-g)
+add_compile_options(-g0)
 add_compile_options(-Ofast)
 add_compile_options(-Wall)
 add_compile_options(-pedantic)
